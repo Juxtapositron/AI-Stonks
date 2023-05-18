@@ -1,11 +1,12 @@
-public class Bot{
-  float[] stockPrices;
+class Bot{
+  float[][] stockPrices;
   float[][] calcRate;
   float[][] weightMatrix;
   float[][] buySellMatrix;
   
-  public Bot(float[] input){
+  public Bot(float[][] input){
     stockPrices = input;
+    
   }
   public void updateStockPricesMonthly(float currentPrice){
     for (int i = stockPrices.length -1; i>0; i--){
@@ -13,4 +14,5 @@ public class Bot{
     }
     stockPrices[0] = currentPrice;
   }
+  
 }
