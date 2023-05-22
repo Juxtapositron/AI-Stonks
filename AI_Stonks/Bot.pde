@@ -10,8 +10,8 @@ class Bot{
   }
   public void updateStockPricesMonthly(float currentPriceAAPL,float currentPriceGS, float currentPriceXOM, float currentPriceVZ){
     for (int i = stockPrices[0].length -1; i>0; i--){
-      for (int j = 0; j < stockPrices.length; j++{
-        stockPrices[j][i] = stockPrices[j][i-1]
+      for (int j = 0; j < stockPrices.length; j++){
+        stockPrices[j][i] = stockPrices[j][i-1];
       }
     }
     stockPrices[0][0] = currentPriceAAPL;
