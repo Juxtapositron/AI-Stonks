@@ -10,12 +10,21 @@ float [] AAPLPrices = {1,0.91,1.08,1.02,0.98,1.05,1.07,1.06,1.18,1.15,1.13,1.34,
 float [] VZPrices1 = {55.52,53.43,55.24,54.79,56.76,54.5,50.73,47.58,50.56,52.81,53.88,54.45};
 float [] XOMPrices1 = {43.13,43,42.94,43.16,42.44,40.94,40.28,38.41,38.84,41,39.97,38.88};
 float [] GSPrices1 = {94.38,86.94,89.38,89.88,93,89.63,87.31,94,102.5,117.19,117.38,128};
-float [] AAPLPrices1 = {1,0.91,1.08,1.02,0.98,1.05,1.07,1.06,1.18,1.15,1.13,1.34}; 
+float [] AAPLPrices1 = {1.0,0.91,1.08,1.02,0.98,1.05,1.07,1.06,1.18,1.15,1.13,1.34}; 
 float[][] sampleInput = new float[4][12];
+
+
 
 Bot bot1 = new Bot(sampleInput);
 
 void setup(){
+  for (int i = 0; i<VZPrices1.length -1; i++){
+  sampleInput[0][i] = VZPrices1[i];
+  sampleInput[1][i] = XOMPrices1[i];
+  sampleInput[2][i] = GSPrices1[i];
+  sampleInput[3][i] = AAPLPrices1[i];
+}
+
   size(1000,1000);
   int x = 30;
   int y = 0;
@@ -29,12 +38,12 @@ void setup(){
     x+=60;
     y = 0;
   }
-  int yNumbers = 400;
+  int yNumbers = 480;
   int yPlace = 10;
   fill(255, 0, 0);
   for(int i =0; yNumbers >=0; i++){
   text("" + yNumbers, 10, yPlace);
-  yNumbers -=25;
+  yNumbers -=30;
   yPlace += 60;
   }
   
