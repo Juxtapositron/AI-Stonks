@@ -16,7 +16,24 @@ float[][] sampleInput = new float[4][12];
 
 
 Bot bot1 = new Bot(sampleInput);
-
+public float[][] combo (float[] data, order, float[][] list){
+    if (order == 0)
+    return sum;
+    float multiple = 1;
+    int x = 0;
+    while (index < data.length && x < order){
+        if (index == data.length) {
+        int[] combination = data.clone();
+        combinations.add(combination);
+    } else {
+        int max = Math.min(end, end + 1 - data.length + index);
+        for (int i = start; i <= max; i++) {
+            data[index] = i;
+            helper(combinations, data, i + 1, end, index + 1);
+        }
+    }
+    }
+}
 void setup(){
   for (int i = 0; i<VZPrices1.length -1; i++){
   sampleInput[0][i] = VZPrices1[i];
