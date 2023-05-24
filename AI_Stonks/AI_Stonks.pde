@@ -12,28 +12,45 @@ float [] XOMPrices1 = {43.13,43,42.94,43.16,42.44,40.94,40.28,38.41,38.84,41,39.
 float [] GSPrices1 = {94.38,86.94,89.38,89.88,93,89.63,87.31,94,102.5,117.19,117.38,128};
 float [] AAPLPrices1 = {1,0.91,1.08,1.02,0.98,1.05,1.07,1.06,1.18,1.15,1.13,1.34}; 
 float[][] sampleInput = new float[4][12];
-sampleInput[0] = VZPrices1;
-sampleInput[1] = XOMPrices1;
-sampleInput[2] = GSPrices1;
-sampleInput[3] = AAPLPrices1;
-
 
 Bot bot1 = new Bot(sampleInput);
 
 void setup(){
-  size(660,660);
-  int x = 0;
+  size(1000,1000);
+  int x = 30;
   int y = 0;
-  stroke(255);
-  while (x < 660){
-    while (y < 660){
+  stroke(200);
+  while (x < 820){
+    while (y < 940){
        fill(0);
-       rect(x*20, y*20, 20, 20);
-      y+=20;
+       rect(x, y, 60, 60);
+      y+=60;
     }
-    x+=20;
+    x+=60;
     y = 0;
   }
+  int yNumbers = 400;
+  int yPlace = 10;
+  fill(255, 0, 0);
+  for(int i =0; yNumbers >=0; i++){
+  text("" + yNumbers, 10, yPlace);
+  yNumbers -=25;
+  yPlace += 60;
+  }
+  
+  int xNumbers = 11;
+  int xPlace = 80;
+  fill(255, 0, 0);
+  text("12", 20, 970);
+  for(int i =0; xNumbers >=0; i++){
+  text("" + xNumbers, xPlace, 970);
+  xNumbers --;
+  xPlace += 60; 
+  }
+  text("Months Ago", 450, 985);
+  
+  
+  
 }
 void draw(){
   int x=1;
