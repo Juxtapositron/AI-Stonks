@@ -9,6 +9,7 @@ class Bot{
     stockPrices = input;
     money = moola;
     stocksHeld = new float[4];
+    totalValue = moola;
     
   }
   
@@ -22,6 +23,9 @@ class Bot{
     stockPrices[1][11] = currentPriceGS;
     stockPrices[2][11] = currentPriceXOM;
     stockPrices[3][11] = currentPriceVZ;
+  }
+  public void totalValue(){
+    totalValue = money + stocksHeld[0] + stocksHeld[1] + stocksHeld[2] + stocksHeld[3];
   }
   
 }
