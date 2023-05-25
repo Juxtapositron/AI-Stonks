@@ -18,10 +18,5 @@ class Bot{
     stockPrices[2][11] = currentPriceXOM;
     stockPrices[3][11] = currentPriceVZ;
   }
-  public float[][] lagrange(){
-    float[][] result = new float[4][11];
-    //for(int 
-    return result;
-  }
-    
+  
 }
