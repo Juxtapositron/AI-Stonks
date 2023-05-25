@@ -17,7 +17,7 @@ float[][] sampleInput = new float[4][12];
 
 
 
-Bot bot1 = new Bot(sampleInput);
+Bot bot1 = new Bot(sampleInput, 100000);
 
 void setup(){
   countdown = 0;
