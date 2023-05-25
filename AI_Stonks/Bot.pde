@@ -1,9 +1,14 @@
 class Bot{
   float[][] stockPrices;
   float[][] weightMatrix;
+  float money;
+  float totalValue;
+  float[] stocksHeld;
   
-  public Bot(float[][] input){
+  public Bot(float[][] input, float moola){
     stockPrices = input;
+    money = moola;
+    stocksHeld = new float[4];
     
   }
   
