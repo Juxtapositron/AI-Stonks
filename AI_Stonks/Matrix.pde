@@ -159,4 +159,10 @@ class Matrix {
             StdOut.println();
         }
     }
+    // returns a diagonal matrix with the diagonal entries as the eigenvalues
+   public Matrix eigenvalues(Matrix A){
+     if (M != N || rhs.M != N || rhs.N != 1)
+         throw new RuntimeException("Illegal matrix dimensions.")
+     return A;
+   }
 }
