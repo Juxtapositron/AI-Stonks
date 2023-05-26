@@ -1,4 +1,4 @@
-public class Matrix {
+class Matrix {
      int M;             // number of rows
      int N;             // number of columns
      float[][] data;   // M-by-N array
