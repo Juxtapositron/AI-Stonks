@@ -25,7 +25,7 @@ class Bot{
     stockPrices[3][11] = currentPriceVZ;
   }
   public void totalValue(){
-    totalValue = money + stocksHeld[0] + stocksHeld[1] + stocksHeld[2] + stocksHeld[3];
+    totalValue = money + stocksHeld[0]*stockPrices[0][11] + stocksHeld[1]*stockPrices[1][11] + stocksHeld[2]*stockPrices[2][11] + stocksHeld[3]*stockPrices[3][11];
   }
   
 }
