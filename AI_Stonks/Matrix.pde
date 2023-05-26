@@ -19,7 +19,13 @@ class Matrix {
             for (int j = 0; j < N; j++)
                     this.data[i][j] = data[i][j];
     }
+  public Matrix getR(){
+    return M;
+  }
 
+  public Matrix getC(){
+    return N;
+  }
     // copy constructor
     private Matrix(Matrix A) { this(A.data); }
 
@@ -158,7 +164,18 @@ class Matrix {
                 StdOut.printf("%9.4f ", data[i][j]);
             StdOut.println();
         }
-    }
+   public Matrix exp(Matrix A, int power){
+     if (power == 0){
+       return (idenity(A.getR()));
+     }
+     if (power < 0){
+       return exp(solve(A), -1*power);
+     }
+     if (power == 1){
+       return A;
+     }
+     return exp(A.times(A), power - 1);
+   }
     // returns a diagonal matrix with the diagonal entries as the eigenvalues
    public Matrix eigenvalues(Matrix A){
      if (M != N || rhs.M != N || rhs.N != 1)
