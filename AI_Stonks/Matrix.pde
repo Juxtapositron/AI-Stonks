@@ -25,19 +25,29 @@ class Matrix {
             for (int j = 0; j < N; j++)
                     this.data[i][j] = data[i][j];
     }
+    // number of rows in a matrix
   public int getR(){
     return this.M;
   }
-
+   // number of columns in a matrix
   public int getC(){
     return this.N;
   }
   
-  public void set(float t, int x, int y){
+   // changes a singular value inside a matrix given a coordinate
+   public void set(float t, int x, int y){
     if (x < 0 || y < 0 || x >= M || y >= N)
        throw new RuntimeException("Bad coordinates.");
      this.data[x][y] = t;
      return;
+  }
+
+  
+  // returns a value at a given index of the matrix
+  public int get(int x, int y){
+    if (x < 0 || y < 0 || x >= M || y >= N)
+       throw new RuntimeException("Bad coordinates.");
+     return this.data[x][y];
   }
     // copy constructor
     private Matrix(Matrix A) { this(A.data); }
@@ -58,7 +68,18 @@ class Matrix {
             I.data[i][i] = 1;
         return I;
     }
-
+    
+    // creates an all ones M by N matrix
+    public Matrix ones(int M, int N) {
+        Matrix I = new Matrix(N, N);
+        for (int i = 0; i < M; i++){
+          for(int j = 0; j < N; j++){
+            I.data[i][j] = 1;
+            }
+            }
+        return I;
+    }
+    
     // swap rows i and j
     public void swap(int i, int j) {
         float[] temp = data[i];
@@ -170,7 +191,7 @@ class Matrix {
 
     }
 
-    // print matrix to standard output
+    // raises matrix A to any integer exponent (can be negative if A is invertible)
    public Matrix exponent(Matrix A, int power){
      if (power == 0){
        return (identity(A.getR()));
@@ -202,4 +223,13 @@ class Matrix {
    public Matrix cov(Matrix A){
      return (A.transpose().times(A)).times(1/getR());
    }
+   
+   // your decision vector
+  public Matrix decision(Matrix A){
+     Matrix C = cov(A);
+     Matrix D = solve(C).times(ones(C.getR(), 1));
+     Matrix E = D.transpose().times(ones(C.getR(), 1));
+     float F = 1/E.get(0,0);
+     return D.times(F);
+  }
 }
