@@ -56,10 +56,9 @@ static class Matrix {
     public static Matrix random1(int M, int N) {
         Matrix A = new Matrix(M, N);
         for (int i = 0; i < M; i++)
-            for (int j = 0; j < N; j++)    
-                A.data[i][j] = (float)Math.random();
+                A.data[i][i] = (float)Math.random();
         return A;
-    }
+      }
 
     // create and return the N-by-N identity matrix
     public static Matrix identity(int N) {
@@ -223,7 +222,10 @@ static class Matrix {
    public static Matrix cov(Matrix A){
      return (A.transpose().times(A)).times(1/A.getR());
    }
-   
+   // prints a matrix
+   public void matrixPrint(){
+      System.out.println(Arrays.toString(this.data));
+   }
    // your decision vector
   public static Matrix decision(Matrix A){
      Matrix C = cov(A);
