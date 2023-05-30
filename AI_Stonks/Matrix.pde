@@ -1,15 +1,21 @@
-class Matrix {
+static class Matrix {
      int M;             // number of rows
      int N;             // number of columns
      float[][] data;   // M-by-N array
 
     // create M-by-N matrix of 0's
+    
+   
     public Matrix(int M, int N) {
         this.M = M;
         this.N = N;
         data = new float[M][N];
     }
-
+    public Matrix(int M){
+        this.M = M;
+        this.N = 1;
+        data = new float[M][1];
+    }
     // create matrix based on 2d array
     public Matrix(float[][] data) {
         M = data.length;
@@ -19,24 +25,40 @@ class Matrix {
             for (int j = 0; j < N; j++)
                     this.data[i][j] = data[i][j];
     }
-  public Matrix getR(){
-    return M;
+    // number of rows in a matrix
+  public int getR(){
+    return this.M;
+  }
+   // number of columns in a matrix
+  public int getC(){
+    return this.N;
+  }
+  
+   // changes a singular value inside a matrix given a coordinate
+   public void matrixSet(float t, int x, int y){
+    if (x < 0 || y < 0 || x >= M || y >= N)
+       throw new RuntimeException("Bad coordinates.");
+     this.data[x][y] = t;
+     return;
   }
 
-  public Matrix getC(){
-    return N;
+  
+  // returns a value at a given index of the matrix
+  public float matrixGet(int x, int y){
+    if (x < 0 || y < 0 || x >= M || y >= N)
+       throw new RuntimeException("Bad coordinates.");
+     return this.data[x][y];
   }
     // copy constructor
     private Matrix(Matrix A) { this(A.data); }
 
     // create and return a random M-by-N matrix with values between 0 and 1
-    public static Matrix random(int M, int N) {
+    public static Matrix random1(int M, int N) {
         Matrix A = new Matrix(M, N);
         for (int i = 0; i < M; i++)
-            for (int j = 0; j < N; j++)
-                A.data[i][j] = Math.random();
+                A.data[i][i] = (float)Math.random();
         return A;
-    }
+      }
 
     // create and return the N-by-N identity matrix
     public static Matrix identity(int N) {
@@ -45,9 +67,20 @@ class Matrix {
             I.data[i][i] = 1;
         return I;
     }
-
+    
+    // creates an all ones M by N matrix
+    public static Matrix ones(int M, int N) {
+        Matrix I = new Matrix(M, N);
+        for (int i = 0; i < M; i++){
+          for(int j = 0; j < N; j++){
+            I.data[i][j] = 1;
+            }
+            }
+        return I;
+    }
+    
     // swap rows i and j
-    private void swap(int i, int j) {
+    public void swap(int i, int j) {
         float[] temp = data[i];
         data[i] = data[j];
         data[j] = temp;
@@ -156,30 +189,87 @@ class Matrix {
         return x;
 
     }
-
-    // print matrix to standard output
-    public void show() {
-        for (int i = 0; i < M; i++) {
-            for (int j = 0; j < N; j++)
-                StdOut.printf("%9.4f ", data[i][j]);
-            StdOut.println();
+    // inverse without any caveats for 4x4 only 
+    public static Matrix inverse(Matrix A){
+        if (A.M != 4 || A.N != 4)
+            throw new RuntimeException("Illegal matrix dimensions.");
+        Matrix B = new Matrix(4,1);
+        Matrix C = new Matrix(4,1);
+        Matrix D = new Matrix(4,1);
+        Matrix E = new Matrix(4,1);
+        B.matrixSet(1.0, 0, 0);
+        C.matrixSet(1.0, 1, 1);
+        D.matrixSet(1.0, 2, 2);
+        E.matrixSet(1.0, 3, 3);
+        Matrix F = A.solve(B);
+        Matrix G = A.solve(C);
+        Matrix H = A.solve(D);
+        Matrix J = A.solve(E);
+        float[][] matrix = new float[4][4];
+        for(int i = 0; i < 4; i++){
+          matrix[0][i] = F.matrixGet(0, i);
         }
-   public Matrix exp(Matrix A, int power){
+        for(int i = 0; i < 4; i++){
+          matrix[1][i] = G.matrixGet(0, i);
+        }
+        for(int i = 0; i < 4; i++){
+          matrix[2][i] = H.matrixGet(0, i);
+        }
+        for(int i = 0; i < 4; i++){
+          matrix[3][i] = J.matrixGet(0, i);
+        }
+        return new Matrix(matrix);
+    }
+
+    // raises matrix A to any integer exponent (can be negative if A is invertible)
+   public Matrix exponent(Matrix A, int power){
      if (power == 0){
-       return (idenity(A.getR()));
+       return (identity(A.getR()));
      }
      if (power < 0){
-       return exp(solve(A), -1*power);
+       return exponent(inverse(A), -1*power);
      }
      if (power == 1){
        return A;
      }
-     return exp(A.times(A), power - 1);
+     return exponent(A.times(A), power - 1);
    }
     // returns a diagonal matrix with the diagonal entries as the eigenvalues
    public Matrix eigenvalues(Matrix A){
-     if (M != N || rhs.M != N || rhs.N != 1)
-         throw new RuntimeException("Illegal matrix dimensions.")
+     if (M != N)
+         throw new RuntimeException("Illegal matrix dimensions.");
      return A;
    }
+   public Matrix times(float x){
+      Matrix A = new Matrix(M, N);
+      for (int i = 0; i<M; i++){
+        for(int j = 0; j<N; j++){
+           float t = this.data[i][j];
+           A.matrixSet(x*t, i, j);
+        }
+      }
+      return A;
+   }
+   public static Matrix cov(Matrix A){
+     return (A.transpose().times(A)).times(1.0/(A.getR()));
+   }
+   // prints a matrix
+   public void matrixPrint(){
+      for (float[] row : data) {
+        for (float element : row) {
+            System.out.print("["+element + "]");
+        }
+        System.out.println();
+    }
+   }
+   // your decision vector
+  public static Matrix decision(Matrix A){
+     A.matrixPrint();
+     Matrix C = cov(A);
+     C.matrixPrint();
+     Matrix D = inverse(C).times(ones(C.getR(), 1));
+     Matrix E = D.transpose().times(ones(C.getR(), 1));
+     float F = 1/E.matrixGet(0,0);
+     return D.times(F);
+  }
 }
