@@ -1,4 +1,4 @@
-class Matrix {
+static class Matrix {
      int M;             // number of rows
      int N;             // number of columns
      float[][] data;   // M-by-N array
@@ -35,7 +35,7 @@ class Matrix {
   }
   
    // changes a singular value inside a matrix given a coordinate
-   public void set(float t, int x, int y){
+   public void matrixSet(float t, int x, int y){
     if (x < 0 || y < 0 || x >= M || y >= N)
        throw new RuntimeException("Bad coordinates.");
      this.data[x][y] = t;
@@ -44,7 +44,7 @@ class Matrix {
 
   
   // returns a value at a given index of the matrix
-  public int get(int x, int y){
+  public float matrixGet(int x, int y){
     if (x < 0 || y < 0 || x >= M || y >= N)
        throw new RuntimeException("Bad coordinates.");
      return this.data[x][y];
@@ -53,16 +53,16 @@ class Matrix {
     private Matrix(Matrix A) { this(A.data); }
 
     // create and return a random M-by-N matrix with values between 0 and 1
-    public Matrix random(int M, int N) {
+    public static Matrix random1(int M, int N) {
         Matrix A = new Matrix(M, N);
         for (int i = 0; i < M; i++)
-            for (int j = 0; j < N; j++)
+            for (int j = 0; j < N; j++)    
                 A.data[i][j] = (float)Math.random();
         return A;
     }
 
     // create and return the N-by-N identity matrix
-    public Matrix identity(int N) {
+    public static Matrix identity(int N) {
         Matrix I = new Matrix(N, N);
         for (int i = 0; i < N; i++)
             I.data[i][i] = 1;
@@ -70,7 +70,7 @@ class Matrix {
     }
     
     // creates an all ones M by N matrix
-    public Matrix ones(int M, int N) {
+    public static Matrix ones(int M, int N) {
         Matrix I = new Matrix(N, N);
         for (int i = 0; i < M; i++){
           for(int j = 0; j < N; j++){
@@ -215,21 +215,21 @@ class Matrix {
       for (int i = 0; i<M; i++){
         for(int j = 0; j<N; j++){
            float t = this.data[i][j];
-           A.set(x*t, i, j);
+           A.matrixSet(x*t, i, j);
         }
       }
       return A;
    }
-   public Matrix cov(Matrix A){
-     return (A.transpose().times(A)).times(1/getR());
+   public static Matrix cov(Matrix A){
+     return (A.transpose().times(A)).times(1/A.getR());
    }
    
    // your decision vector
-  public Matrix decision(Matrix A){
+  public static Matrix decision(Matrix A){
      Matrix C = cov(A);
-     Matrix D = solve(C).times(ones(C.getR(), 1));
+     Matrix D = C.solve(identity(C.getR())).times(ones(C.getR(), 1));
      Matrix E = D.transpose().times(ones(C.getR(), 1));
-     float F = 1/E.get(0,0);
+     float F = 1/E.matrixGet(0,0);
      return D.times(F);
   }
 }

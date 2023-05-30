@@ -32,18 +32,16 @@ void setup(){
   
 }
 void draw(){
-  bot1.totalValue();
   fill(255, 0, 255);
   text("Money:  " + bot1.money, 880, 60);
-  text("totalValue:  " + bot1.totalValue, 880, 40);
   fill(255,0,0);
-  text("AAPL Stock:  " + bot1.stocksHeld[0], 880, 80);
+  text("AAPL Stock:  " + bot1.decisions[0], 880, 80);
   fill(0,255,0);
-  text("GS Stock:  " + bot1.stocksHeld[1], 880, 100);
+  text("GS Stock:  " + bot1.decisions[1], 880, 100);
   fill(0,255,255);
-  text("XOM Stock:  " + bot1.stocksHeld[2], 880, 120);
+  text("XOM Stock:  " + bot1.decisions[2], 880, 120);
   fill(0,0,255);
-  text("VZ Stock:  " + bot1.stocksHeld[3], 880, 140);
+  text("VZ Stock:  " + bot1.decisions[3], 880, 140);
   if(countdown == 0){
     //1 second timer
     countdown+=0;

@@ -2,15 +2,20 @@ class Bot{
   float[][] stockPrices;
   float[][] weightMatrix;
   float money;
-  float totalValue;
-  float[] stocksHeld;
+  float[] decisions;
+  Matrix randomMatrix;
   
   public Bot(float[][] input, float moola){
     stockPrices = input;
     money = moola;
-    stocksHeld = new float[4];
-    totalValue = moola;
+    decisions = new float[4];
     
+  }
+  public Bot(float[][] input, float moola, Matrix random){
+    stockPrices = input;
+    money = moola;
+    decisions = new float[4];
+    randomMatrix = random;
   }
   
   public void updateStockPricesMonthly(float currentPriceAAPL,float currentPriceGS, float currentPriceXOM, float currentPriceVZ){
@@ -24,8 +29,5 @@ class Bot{
     stockPrices[2][11] = currentPriceXOM;
     stockPrices[3][11] = currentPriceVZ;
   }
-  public void totalValue(){
-    totalValue = money + stocksHeld[0]*stockPrices[0][11] + stocksHeld[1]*stockPrices[1][11] + stocksHeld[2]*stockPrices[2][11] + stocksHeld[3]*stockPrices[3][11];
-  }
-  
+
 }
