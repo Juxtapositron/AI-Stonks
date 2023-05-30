@@ -29,12 +29,39 @@ void setup(){
   //}
 
   size(1000,1000);
-  float[][] test = new float[2][2];
+  float[][] test = new float[3][3];
   test[0][0] = 1;
   test[0][1] = 2;
-  test[1][0] = 3;
-  test[1][1] =4;
+  test[0][2] = 3;
+  test[1][0] = 4;
+  test[1][1] = 5;
+  test[1][2] = 6;
+  test[2][0] = 7;
+  test[2][1] = 8;
+  test[2][2] = 10;
+  Matrix identity = Matrix.identity(4);
+  float[][] thing = new float[3][1];
+  thing[0][0] = 1;
+  thing[1][0] = 1;
+  thing[2][0] = 1;
+  Matrix things = new Matrix(thing);
   Matrix testing = new Matrix(test);
+  testing.matrixPrint();
+  testing.solve(things).matrixPrint();
+  Matrix F = testing.transpose();
+  F.matrixPrint();
+  F.times(3.0).matrixPrint();
+  Matrix.cov(F).matrixPrint();
+  println(testing.getR());
+  println(testing.getC());
+  testing.matrixSet (7.0, 2, 0);
+  testing.matrixPrint();
+  Matrix testing2 = Matrix.random1(2,2);
+  testing2.matrixPrint();
+  Matrix testing3 = Matrix.identity(5);
+  testing3.matrixPrint();
+  Matrix testing4 = Matrix.ones(5,12);
+  testing4.matrixPrint();
   Matrix.cov(testing).matrixPrint();
   run();
 }

@@ -143,8 +143,7 @@ static class Matrix {
 
     // return x = A^-1 b, assuming A is square and has full rank
     public Matrix solve(Matrix rhs) {
-        //if (M != N || rhs.M != N || rhs.N != 1)
-        if (M != N || rhs.M != N)
+        if (M != N || rhs.M != N || rhs.N != 1)
             throw new RuntimeException("Illegal matrix dimensions.");
 
         // create copies of the data
@@ -190,6 +189,37 @@ static class Matrix {
         return x;
 
     }
+    // inverse without any caveats for 4x4 only 
+    public static Matrix inverse(Matrix A){
+        if (A.M != 4 || A.N != 4)
+            throw new RuntimeException("Illegal matrix dimensions.");
+        Matrix B = new Matrix(4,1);
+        Matrix C = new Matrix(4,1);
+        Matrix D = new Matrix(4,1);
+        Matrix E = new Matrix(4,1);
+        B.matrixSet(1.0, 0, 0);
+        C.matrixSet(1.0, 1, 1);
+        D.matrixSet(1.0, 2, 2);
+        E.matrixSet(1.0, 3, 3);
+        Matrix F = A.solve(B);
+        Matrix G = A.solve(C);
+        Matrix H = A.solve(D);
+        Matrix J = A.solve(E);
+        float[][] matrix = new float[4][4];
+        for(int i = 0; i < 4; i++){
+          matrix[0][i] = F.matrixGet(0, i);
+        }
+        for(int i = 0; i < 4; i++){
+          matrix[1][i] = G.matrixGet(0, i);
+        }
+        for(int i = 0; i < 4; i++){
+          matrix[2][i] = H.matrixGet(0, i);
+        }
+        for(int i = 0; i < 4; i++){
+          matrix[3][i] = J.matrixGet(0, i);
+        }
+        return new Matrix(matrix);
+    }
 
     // raises matrix A to any integer exponent (can be negative if A is invertible)
    public Matrix exponent(Matrix A, int power){
@@ -197,7 +227,7 @@ static class Matrix {
        return (identity(A.getR()));
      }
      if (power < 0){
-       return exponent(solve(A), -1*power);
+       return exponent(inverse(A), -1*power);
      }
      if (power == 1){
        return A;
@@ -221,7 +251,7 @@ static class Matrix {
       return A;
    }
    public static Matrix cov(Matrix A){
-     return (A.transpose().times(A)).times(1/A.getR());
+     return (A.transpose().times(A)).times(1.0/(A.getR()));
    }
    // prints a matrix
    public void matrixPrint(){
@@ -237,7 +267,7 @@ static class Matrix {
      A.matrixPrint();
      Matrix C = cov(A);
      C.matrixPrint();
-     Matrix D = C.solve(identity(C.getR())).times(ones(C.getR(), 1));
+     Matrix D = inverse(C).times(ones(C.getR(), 1));
      Matrix E = D.transpose().times(ones(C.getR(), 1));
      float F = 1/E.matrixGet(0,0);
      return D.times(F);
