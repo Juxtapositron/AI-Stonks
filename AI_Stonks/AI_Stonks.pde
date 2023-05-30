@@ -21,14 +21,21 @@ Bot bot1 = new Bot(sampleInput, 100000);
 
 void setup(){
   countdown = 0;
-  for (int i = 0; i<VZPrices1.length ; i++){
-  sampleInput[0][i] = AAPLPrices1[i];
-  sampleInput[1][i] = GSPrices1[i];
-  sampleInput[2][i] = XOMPrices1[i];
-  sampleInput[3][i] = VZPrices1[i];
-}
+  //for (int i = 0; i<VZPrices1.length ; i++){
+  //  sampleInput[0][i] = AAPLPrices1[i];
+  //  sampleInput[1][i] = GSPrices1[i];
+  //  sampleInput[2][i] = XOMPrices1[i];
+  //  sampleInput[3][i] = VZPrices1[i];
+  //}
 
   size(1000,1000);
+  float[][] test = new float[2][2];
+  test[0][0] = 1;
+  test[0][1] = 2;
+  test[1][0] = 3;
+  test[1][1] =4;
+  Matrix testing = new Matrix(test);
+  Matrix.cov(testing).matrixPrint();
   run();
 }
 void draw(){
@@ -60,7 +67,7 @@ public void run(){
     }
     float amount = 0;
     int index = 0;
-    for(int i =0; i<100; i++){
+    for(int i = 0; i<100; i++){
       if (currentSchool.returnsArray[i] > amount){
         amount = currentSchool.returnsArray[i];
         index = i;
@@ -73,7 +80,7 @@ public void run(){
    public void run2(Matrix bestRandom){
      School currentSchool = new School(bestRandom);
     
-    for(int i =0; i<100; i++){
+    for(int i = 0; i<100; i++){
       Bot currentBot= currentSchool.botArray[i];
       Matrix stocks = new Matrix(currentBot.stockPrices);
       Matrix newStock = stocks.times(currentBot.randomMatrix);
@@ -96,7 +103,7 @@ public void run(){
     }
     float amount = 0;
     int index = 0;
-    for(int i =0; i<100; i++){
+    for(int i = 0; i<100; i++){
       if (currentSchool.returnsArray[i] > amount){
         amount = currentSchool.returnsArray[i];
         index = i;

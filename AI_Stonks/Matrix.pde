@@ -225,11 +225,18 @@ static class Matrix {
    }
    // prints a matrix
    public void matrixPrint(){
-      System.out.println(Arrays.toString(this.data));
+      for (float[] row : data) {
+        for (float element : row) {
+            System.out.print("["+element + "]");
+        }
+        System.out.println();
+    }
    }
    // your decision vector
   public static Matrix decision(Matrix A){
+     A.matrixPrint();
      Matrix C = cov(A);
+     C.matrixPrint();
      Matrix D = C.solve(identity(C.getR())).times(ones(C.getR(), 1));
      Matrix E = D.transpose().times(ones(C.getR(), 1));
      float F = 1/E.matrixGet(0,0);
