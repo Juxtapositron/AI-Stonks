@@ -52,12 +52,11 @@ class Matrix {
     // copy constructor
     private Matrix(Matrix A) { this(A.data); }
 
-    // create and return a random M-by-N matrix with values between 0 and 1
+    // create and return a random diagonal M-by-N matrix with values between 0 and 1
     public Matrix random(int M, int N) {
         Matrix A = new Matrix(M, N);
         for (int i = 0; i < M; i++)
-            for (int j = 0; j < N; j++)
-                A.data[i][j] = (float)Math.random();
+                A.data[i][i] = (float)Math.random();
         return A;
     }
 
@@ -223,7 +222,10 @@ class Matrix {
    public Matrix cov(Matrix A){
      return (A.transpose().times(A)).times(1/getR());
    }
-   
+   // prints a matrix
+   public void print(){
+      System.out.println(Arrays.toString(this.data));
+   }
    // your decision vector
   public Matrix decision(Matrix A){
      Matrix C = cov(A);
