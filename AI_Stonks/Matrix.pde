@@ -70,7 +70,7 @@ static class Matrix {
     
     // creates an all ones M by N matrix
     public static Matrix ones(int M, int N) {
-        Matrix I = new Matrix(N, N);
+        Matrix I = new Matrix(M, N);
         for (int i = 0; i < M; i++){
           for(int j = 0; j < N; j++){
             I.data[i][j] = 1;
@@ -143,7 +143,8 @@ static class Matrix {
 
     // return x = A^-1 b, assuming A is square and has full rank
     public Matrix solve(Matrix rhs) {
-        if (M != N || rhs.M != N || rhs.N != 1)
+        //if (M != N || rhs.M != N || rhs.N != 1)
+        if (M != N || rhs.M != N)
             throw new RuntimeException("Illegal matrix dimensions.");
 
         // create copies of the data

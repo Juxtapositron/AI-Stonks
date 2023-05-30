@@ -29,9 +29,84 @@ void setup(){
 }
 
   size(1000,1000);
-  
+  run();
 }
 void draw(){
+
+}
+public void run(){
+    School currentSchool = new School();
+    
+    for(int i =0; i<100; i++){
+      Bot currentBot= currentSchool.botArray[i];
+      Matrix stocks = new Matrix(currentBot.stockPrices);
+      Matrix newStock = stocks.times(currentBot.randomMatrix);
+      Matrix decision = Matrix.decision(newStock);
+      currentBot.decisions[0] = decision.matrixGet(0,0);
+      currentBot.decisions[1] = decision.matrixGet(1,0);
+      currentBot.decisions[2] = decision.matrixGet(2,0);
+      currentBot.decisions[3] = decision.matrixGet(3,0);
+      float[][] recentPrices = new float[4][1];
+      recentPrices[0][0] = currentBot.stockPrices[0][11] - currentBot.stockPrices[0][10];
+      recentPrices[1][0] = currentBot.stockPrices[1][11] - currentBot.stockPrices[1][10];
+      recentPrices[2][0] = currentBot.stockPrices[2][11] - currentBot.stockPrices[2][10];
+      recentPrices[3][0] = currentBot.stockPrices[3][11] - currentBot.stockPrices[3][10];
+      Matrix recentPrice = new Matrix(recentPrices);
+      Matrix recentPriceT = recentPrice.transpose();
+      Matrix matrixHolyGrail = recentPriceT.times(decision);
+      float returns = matrixHolyGrail.matrixGet(0,0);
+      currentBot.money += returns;
+      currentSchool.returnsArray[i] = returns;
+    }
+    float amount = 0;
+    int index = 0;
+    for(int i =0; i<100; i++){
+      if (currentSchool.returnsArray[i] > amount){
+        amount = currentSchool.returnsArray[i];
+        index = i;
+      }
+    }
+    Matrix best = currentSchool.botArray[index].randomMatrix;
+    best.matrixPrint();
+    run2(best);
+  }
+   public void run2(Matrix bestRandom){
+     School currentSchool = new School(bestRandom);
+    
+    for(int i =0; i<100; i++){
+      Bot currentBot= currentSchool.botArray[i];
+      Matrix stocks = new Matrix(currentBot.stockPrices);
+      Matrix newStock = stocks.times(currentBot.randomMatrix);
+      Matrix decision = Matrix.decision(newStock);
+      currentBot.decisions[0] = decision.matrixGet(0,0);
+      currentBot.decisions[1] = decision.matrixGet(1,0);
+      currentBot.decisions[2] = decision.matrixGet(2,0);
+      currentBot.decisions[3] = decision.matrixGet(3,0);
+      float[][] recentPrices = new float[4][1];
+      recentPrices[0][0] = currentBot.stockPrices[0][11] - currentBot.stockPrices[0][10];
+      recentPrices[1][0] = currentBot.stockPrices[1][11] - currentBot.stockPrices[1][10];
+      recentPrices[2][0] = currentBot.stockPrices[2][11] - currentBot.stockPrices[2][10];
+      recentPrices[3][0] = currentBot.stockPrices[3][11] - currentBot.stockPrices[3][10];
+      Matrix recentPrice = new Matrix(recentPrices);
+      Matrix recentPriceT = recentPrice.transpose();
+      Matrix matrixHolyGrail = recentPriceT.times(decision);
+      float returns = matrixHolyGrail.matrixGet(0,0);
+      currentBot.money += returns;
+      currentSchool.returnsArray[i] = returns;
+    }
+    float amount = 0;
+    int index = 0;
+    for(int i =0; i<100; i++){
+      if (currentSchool.returnsArray[i] > amount){
+        amount = currentSchool.returnsArray[i];
+        index = i;
+      }
+    }
+    Matrix best = currentSchool.botArray[index].randomMatrix;
+    best.matrixPrint();
+    run2(best);
+  }
+/*void draw(){
   fill(255, 0, 255);
   text("Money:  " + bot1.money, 880, 60);
   fill(255,0,0);
@@ -103,4 +178,4 @@ void draw(){
     countdown --;
   }
   
-}
+}*/
