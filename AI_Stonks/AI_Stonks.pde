@@ -112,7 +112,7 @@ void setup(){
   }
 Matrix finalRandom = new Matrix(12,12);
 finalRandom.matrixPrint();
-finalRandom.matrixSet(1.297904, 0, 0);
+/*finalRandom.matrixSet(1.297904, 0, 0);
 finalRandom.matrixSet(1.373930, 1, 1);
 finalRandom.matrixSet(0.581237, 2, 2);
 finalRandom.matrixSet(0.55459, 3, 3);
@@ -123,7 +123,19 @@ finalRandom.matrixSet(1.314676, 7, 7);
 finalRandom.matrixSet(0.908109, 8, 8);
 finalRandom.matrixSet(0.679797, 9, 9);
 finalRandom.matrixSet(0.6352214, 10, 10);
-finalRandom.matrixSet(1.349734, 11, 11);
+finalRandom.matrixSet(1.349734, 11, 11);*/
+finalRandom.matrixSet(0.6764002, 0, 0);
+finalRandom.matrixSet(0.962677, 1, 1);
+finalRandom.matrixSet(0.841834, 2, 2);
+finalRandom.matrixSet(0.752017, 3, 3);
+finalRandom.matrixSet(0.90798557, 4, 4);
+finalRandom.matrixSet(1.291166, 5, 5);
+finalRandom.matrixSet(0.676504, 6, 6);
+finalRandom.matrixSet(0.7904791, 7, 7);
+finalRandom.matrixSet(1.146654, 8, 8);
+finalRandom.matrixSet(1.458409, 9, 9);
+finalRandom.matrixSet(0.7211009, 10, 10);
+finalRandom.matrixSet(0.5442920, 11, 11);
 bot1 = new Bot(sampleInput, 100000, finalRandom); 
 
   //run();
@@ -143,7 +155,7 @@ void draw(){
   if(countdown == 0 && indexMonth <1217){
     background(255);
     //1 second timer
-    countdown+=30;
+    countdown+=2;
     int x = 30;
   int y = 0;
   stroke(200);
