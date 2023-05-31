@@ -37,6 +37,7 @@ class School{
       botArray[i] = new Bot(x, 100000, random);
     }
     botArray[0] = new Bot(x, 100000, bestRandom);
+    returnsArray = new float[100];
   }
   public int genINT(){
   return (int)Math.random()*1070 +90;
@@ -44,11 +45,11 @@ class School{
   
   public float[][] input(int startMonth){
     float[][]result =new float[4][12];
-    for(int i =0; i< 12; i++){
-      result[0][i] = AAPLPrices[i];
-      result[1][i] = GSPrices[i];
-      result[2][i] = XOMPrices[i];
-      result[3][i] = VZPrices[i];
+    for(int i =0; i< 012; i++){
+      result[0][i] = AAPLPrices[startMonth+i];
+      result[1][i] = GSPrices[startMonth+i];
+      result[2][i] = XOMPrices[startMonth+i];
+      result[3][i] = VZPrices[startMonth+i];
     }
     return result;
   }

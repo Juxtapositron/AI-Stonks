@@ -39,7 +39,6 @@ static class Matrix {
     if (x < 0 || y < 0 || x >= M || y >= N)
        throw new RuntimeException("Bad coordinates.");
      this.data[x][y] = t;
-     return;
   }
 
   
@@ -198,25 +197,25 @@ static class Matrix {
         Matrix D = new Matrix(4,1);
         Matrix E = new Matrix(4,1);
         B.matrixSet(1.0, 0, 0);
-        C.matrixSet(1.0, 1, 1);
-        D.matrixSet(1.0, 2, 2);
-        E.matrixSet(1.0, 3, 3);
+        C.matrixSet(1.0, 1, 0);
+        D.matrixSet(1.0, 2, 0);
+        E.matrixSet(1.0, 3, 0);
         Matrix F = A.solve(B);
         Matrix G = A.solve(C);
         Matrix H = A.solve(D);
         Matrix J = A.solve(E);
         float[][] matrix = new float[4][4];
         for(int i = 0; i < 4; i++){
-          matrix[0][i] = F.matrixGet(0, i);
+          matrix[0][i] = F.matrixGet(i, 0);
         }
         for(int i = 0; i < 4; i++){
-          matrix[1][i] = G.matrixGet(0, i);
+          matrix[1][i] = G.matrixGet(i, 0);
         }
         for(int i = 0; i < 4; i++){
-          matrix[2][i] = H.matrixGet(0, i);
+          matrix[2][i] = H.matrixGet(i, 0);
         }
         for(int i = 0; i < 4; i++){
-          matrix[3][i] = J.matrixGet(0, i);
+          matrix[3][i] = J.matrixGet(i, 0);
         }
         return new Matrix(matrix);
     }
@@ -251,7 +250,8 @@ static class Matrix {
       return A;
    }
    public static Matrix cov(Matrix A){
-     return (A.transpose().times(A)).times(1.0/(A.getR()));
+     Matrix B = demean(A);
+     return (B.transpose().times(B)).times(1.0/(B.getR()));
    }
    public static Matrix demean(Matrix A){
      float mean = 0;
@@ -275,9 +275,7 @@ static class Matrix {
    }
    // your decision vector
   public static Matrix decision(Matrix A){
-     A.matrixPrint();
-     Matrix C = cov(A);
-     C.matrixPrint();
+     Matrix C = cov(A.transpose());
      Matrix D = inverse(C).times(ones(C.getR(), 1));
      Matrix E = D.transpose().times(ones(C.getR(), 1));
      float F = 1/E.matrixGet(0,0);
