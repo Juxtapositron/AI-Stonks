@@ -155,7 +155,7 @@ void draw(){
   if(countdown == 0 && indexMonth <1217){
     background(255);
     //1 second timer
-    countdown+=2;
+    countdown+=10;
     int x = 30;
   int y = 0;
   stroke(200);
