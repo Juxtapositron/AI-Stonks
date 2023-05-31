@@ -111,7 +111,6 @@ void setup(){
     sampleInput[3][i] = VZPrices1[i];
   }
 Matrix finalRandom = new Matrix(12,12);
-finalRandom.matrixPrint();
 /*finalRandom.matrixSet(1.297904, 0, 0);
 finalRandom.matrixSet(1.373930, 1, 1);
 finalRandom.matrixSet(0.581237, 2, 2);
