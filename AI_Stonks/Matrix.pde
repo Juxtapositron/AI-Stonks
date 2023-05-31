@@ -253,6 +253,17 @@ static class Matrix {
    public static Matrix cov(Matrix A){
      return (A.transpose().times(A)).times(1.0/(A.getR()));
    }
+   public static Matrix demean(Matrix A){
+     float mean = 0;
+     for (int i =0; i< A.getR(); i++){
+       for( int j =0; j< A.getC(); j++){
+         mean += A.matrixGet(i,j);
+       }
+     }
+     mean = mean / (A.getR() * A.getC() *1.0);
+     return A.minus(ones(A.getR(), A.getC()).times(mean));
+     
+   }
    // prints a matrix
    public void matrixPrint(){
       for (float[] row : data) {
